@@ -27,13 +27,14 @@ int main(void)
         else if (!strncmp(token, "SHOW_DECK", 9))
         {
             token = strtok(NULL, "  ");
-            unsigned int index = atoi(token);
-            if (atoi(token) < 0)
-            {
-                printf(INVALID_COMMAND);
+            if (!check_is_number(token))
                 continue;
-            }
-            if (index >= deck_size)
+            unsigned int index = atoi(token);
+            int index_int = atoi(token);
+            if (invalid_command(token))
+                continue;
+
+            if (index_int < 0 || index >= deck_size)
                 printf(DECK_INDEX_OUT_OF_BOUNDS);
             else
                 dll_show_deck(list_decks, index);
@@ -47,9 +48,12 @@ int main(void)
         {
             token = strtok(NULL, "  ");
             unsigned int index = atoi(token);
-            if (atoi(token) < 0)
+            int index_int = atoi(token);
+            if (invalid_command(token))
+                continue;
+            if (index_int < 0)
             {
-                printf(INVALID_COMMAND);
+                printf(DECK_INDEX_OUT_OF_BOUNDS);
                 continue;
             }
             del_deck(list_decks, index, 0);
@@ -61,8 +65,11 @@ int main(void)
             add_additional_cards(list_decks, token);
 
         else if (!strncmp(token, "DECK_NUMBER", 11))
+        {
+            if (invalid_command(token))
+                continue;
             printf("The number of decks is %d.\n", deck_size);
-
+        }
         else if (!strncmp(token, "DECK_LEN", 8))
             len_of_deck(list_decks, token);
 

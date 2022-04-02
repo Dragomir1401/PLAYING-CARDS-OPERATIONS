@@ -50,3 +50,11 @@ void merge_decks(dll_list *deck_list, char *token);
 void reverse_deck(dll_list *deck_list, char *token);
 
 void sort_deck(dll_list *deck_list, char *token);
+
+int invalid_command(char *token);
+
+int invalid_card_command(char *token);
+
+int is_number(char *token);
+
+int check_is_number(char *token);

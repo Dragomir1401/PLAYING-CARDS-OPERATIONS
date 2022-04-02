@@ -161,18 +161,30 @@ int card_is_valid(card card)
 void del_certain_card(dll_list *list_decks, char *token)
 {
     token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
     unsigned int index_deck = atoi(token);
-    if (atoi(token) < 0)
+    int check1, check2;
+    check1 = atoi(token);
+
+    token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
+    unsigned int index_card = atoi(token);
+    check2 = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
+    if (check1 < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
-    token = strtok(NULL, "  ");
-    unsigned int index_card = atoi(token);
 
-    if (atoi(token) < 0)
+    if (check2 < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
         return;
     }
 
@@ -188,18 +200,30 @@ void del_certain_card(dll_list *list_decks, char *token)
 void add_additional_cards(dll_list *deck_list, char *token)
 {
     token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
     unsigned int index_deck = atoi(token);
-    if (atoi(token) < 0)
+    int check1, check2;
+    check1 = atoi(token);
+
+    token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
+    unsigned int nr_cards = atoi(token);
+    check2 = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
+    if (check1 < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
-    token = strtok(NULL, "  ");
-    unsigned int nr_cards = atoi(token);
-    if (atoi(token) < 0)
+    if (check2 < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
         return;
     }
 
@@ -217,9 +241,15 @@ void add_additional_cards(dll_list *deck_list, char *token)
         char *buff = malloc(BUFFER_MAX);
         fgets(buff, BUFFER_MAX, stdin);
         token = strtok(buff, "  ");
+        if (!check_is_number(token))
+            continue;
         card_id.number = atoi(token);
         token = strtok(NULL, "  ");
         strcpy(card_id.symbol, token);
+
+        if (invalid_card_command(token))
+            continue;
+
         if (card_is_valid(card_id))
         {
             deck_add_nth_card(card_deck, dll_get_size(card_deck), &card_id);
@@ -235,10 +265,16 @@ void add_additional_cards(dll_list *deck_list, char *token)
 void len_of_deck(dll_list *deck_list, char *token)
 {
     token = strtok(NULL, " ");
+    if (!check_is_number(token))
+        return;
     unsigned int deck_index = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
     if (atoi(token) < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
@@ -265,10 +301,16 @@ void len_of_deck(dll_list *deck_list, char *token)
 void shuffle_deck(dll_list *deck_list, char *token)
 {
     token = strtok(NULL, " ");
+    if (!check_is_number(token))
+        return;
     unsigned int index_deck = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
     if (atoi(token) < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
@@ -334,10 +376,16 @@ void shuffle_deck(dll_list *deck_list, char *token)
 void reverse_deck(dll_list *deck_list, char *token)
 {
     token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
     unsigned int index_deck = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
     if (atoi(token) < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
@@ -409,10 +457,16 @@ int symbol_comparison(card a, card b)
 void sort_deck(dll_list *deck_list, char *token)
 {
     token = strtok(NULL, "  ");
+    if (!check_is_number(token))
+        return;
     unsigned int index_deck = atoi(token);
+
+    if (invalid_command(token))
+        return;
+
     if (atoi(token) < 0)
     {
-        printf(INVALID_COMMAND);
+        printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
@@ -459,6 +513,28 @@ void sort_deck(dll_list *deck_list, char *token)
     printf("The deck %d was successfully sorted.\n", index_deck);
 }
 
+int is_number(char *token)
+{
+    int sz = strlen(token);
+    int start = 0;
+    if (token[0] == '-')
+        start = 1;
+    for (int i = start; i < sz; i++)
+        if ((token[i] < '0' || token[i] > '9') && token[i] != '\n')
+            return 0;
+
+    return 1;
+}
+
+int check_is_number(char *token)
+{
+    if (!is_number(token))
+    {
+        printf(INVALID_COMMAND);
+        return 0;
+    }
+    return 1;
+}
 // dll_list *aux1 = cards->head;
 // int half;
 // if (size % 2)

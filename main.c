@@ -82,7 +82,7 @@ int main(void)
 
         else if (!strncmp(token, "DECK_NUMBER", 11))
         {
-            // Check validity of input  
+            // Check validity of input
             if (invalid_command(token))
                 continue;
             printf("The number of decks is %d.\n", deck_size);

@@ -1,25 +1,65 @@
-Nume : DRAGOMIR ANDREI
-           Grupă : 312CA
+// Copyright 2022 Dragomir Andrei
 
-       Titlu +
-       numar temă
+**Nume: DRAGOMIR ANDREI
+**Grupă: 312CA
+--------------------------
+--------------------------
+### Tema 1 - Now You See Me
+--------------------------
+--------------------------
 
-           Descriere :
+---------------------------------------------------------------------------
+### Description:
 
-    *Scurtă descriere a funcționalității temei
-        *Eventuale explicații suplimentare pentru anumite părți din temă ce crezi că nu sunt suficient de clare doar urmărind codul
+* This project is basically a library for deck of cards. It allows storage
+of sequences of cards using double linked lists. 
+* It works by creating a list with decks using generic structures that 
+hold pointers to each deck of cards which is itself a double linked list.
+* This piece of software supports commands such as:
 
-            Comentarii asupra temei :
+* ADD_DECK <number_of_cards>
+* DEL_DECK <deck_index>
+* DEL_CARD <deck_index> <card_index>
+* ADD_CARDS <deck_index> <number_of_cards>
+* DECK_NUMBER
+* DECK_LEN <deck_index>
+* SHUFFLE_DECK <deck_index>
+* MERGE_DECKS <deck_index>_1 <deck_index_2>
+* SPLIT_DECK <deck_index> <index_split>
+* REVERSE_DECK <deck_index>
+* SHOW_DECK <deck_index>
+* SHOW_ALL
+* SORT_DECK <deck_index>
+* EXIT
+------------------------------------------------------------------------------
 
-    *Crezi că ai fi putut realiza o implementare mai bună
-    ? *Ce ai invățat din realizarea acestei teme ? *Alte comentarii
+### Comments on this project:
 
-                                                       (Opțional) Resurse
-                                                       / Bibliografie
-                                                 :
 
-                                                 1. [Așa se adaugă un link în Markdown](https
-                                                                                        : //youtu.be/dQw4w9WgXcQ)
+**  What could have gone better?
+------------------------------------------------------------------------------
+* I really think I could do a more compact and a little better organised
+implementation. However, I do think I did a pretty good job on handling
+data structures and thinking this whole project.
+* It took much more time than I expected especially because I had to remake
+it almost whole after not using generic structures the first time.
+------------------------------------------------------------------------------
 
-                                                                                        PS
-                                                                                        : OCW strică link - ul, trebuie să puneți ***doar ***https - ul intre().
+
+** What did you learn while working on this project?
+------------------------------------------------------------------------------
+* I learned how to better handle simple data structures: lists of all sorts.
+* I also learned how to handle memory leakes problems when using very
+abstract memory allocation for lists in lists.
+------------------------------------------------------------------------------
+
+** How to run it:
+make && ./tema1
+
+------------------------------------------------------------------------------
+
+### Resources
+
+1. https://ocw.cs.pub.ro/courses/sd-ca/teme/tema1-2022
+
+2. https://ocw.cs.pub.ro/courses/sd-ca/laboratoare/lab-03

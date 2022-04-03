@@ -1,5 +1,8 @@
+// Copyright 2022 Dragomir Andrei
+
+// File which holds all headers in the project
+
 #include "structures.h"
-dll_list *deck_create();
 
 dll_list *dll_deck_create();
 

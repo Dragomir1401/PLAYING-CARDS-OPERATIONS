@@ -22,8 +22,11 @@ int main(void)
             add_additional_deck(list_decks, token);
 
         else if (!strncmp(token, "SHOW_ALL", 8))
+        {
+            if (invalid_command(token))
+                continue;
             dll_show_all_decks(list_decks);
-
+        }
         else if (!strncmp(token, "SHOW_DECK", 9))
         {
             token = strtok(NULL, "  ");

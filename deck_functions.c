@@ -182,15 +182,15 @@ void del_certain_card(dll_list *list_decks, char *token)
         return;
     }
 
-    if (check2 < 0)
-    {
-        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
-        return;
-    }
-
     if (index_deck >= dll_get_size(list_decks))
     {
         printf(DECK_INDEX_OUT_OF_BOUNDS);
+        return;
+    }
+
+    if (check2 < 0)
+    {
+        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
         return;
     }
 
@@ -236,12 +236,13 @@ void add_additional_cards(dll_list *deck_list, char *token)
     dll_list *card_deck = dll_deck_get_nth_deck(deck_list, index_deck);
     card card_id;
     unsigned int count = 0;
+    char *buff = malloc(BUFFER_MAX);
+
     while (count < nr_cards)
     {
-        char *buff = malloc(BUFFER_MAX);
         fgets(buff, BUFFER_MAX, stdin);
         token = strtok(buff, "  ");
-        if (!check_is_number(token))
+        if (!check_card_is_number(token))
             continue;
         card_id.number = atoi(token);
         token = strtok(NULL, "  ");
@@ -257,8 +258,9 @@ void add_additional_cards(dll_list *deck_list, char *token)
         }
         else
             printf(INVALID_CARD);
-        free(buff);
     }
+    free(buff);
+
     printf("The cards were successfully added to deck %d.\n", index_deck);
 }
 
@@ -531,6 +533,16 @@ int check_is_number(char *token)
     if (!is_number(token))
     {
         printf(INVALID_COMMAND);
+        return 0;
+    }
+    return 1;
+}
+
+int check_card_is_number(char *token)
+{
+    if (!is_number(token))
+    {
+        printf(INVALID_CARD);
         return 0;
     }
     return 1;

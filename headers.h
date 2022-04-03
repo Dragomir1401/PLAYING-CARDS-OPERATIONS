@@ -58,3 +58,5 @@ int invalid_card_command(char *token);
 int is_number(char *token);
 
 int check_is_number(char *token);
+
+int check_card_is_number(char *token);

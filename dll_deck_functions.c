@@ -280,12 +280,13 @@ void add_additional_deck(dll_list *list_decks, char *token)
 
     card card_id;
     int count = 0;
+    char *buff = malloc(BUFFER_MAX);
+
     while (count < nr_cards)
     {
-        char *buff = malloc(BUFFER_MAX);
         fgets(buff, BUFFER_MAX, stdin);
         token = strtok(buff, "  ");
-        if (!check_is_number(token))
+        if (!check_card_is_number(token))
             continue;
         card_id.number = atoi(token);
         token = strtok(NULL, "  ");
@@ -300,8 +301,9 @@ void add_additional_deck(dll_list *list_decks, char *token)
         }
         else
             printf(INVALID_CARD);
-        free(buff);
     }
+
+    free(buff);
 
     dll_deck_add_nth_deck(list_decks, dll_get_size(list_decks), card_deck);
     printf("The deck was successfully created with %d cards.\n", nr_cards);
@@ -428,19 +430,26 @@ void split_deck(dll_list *deck_list, char *token)
         return;
     }
 
-    if (check2 < 0)
-    {
-        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
-        return;
-    }
-
     if (index_deck >= dll_get_size(deck_list))
     {
         printf(DECK_INDEX_OUT_OF_BOUNDS);
         return;
     }
 
+    if (check2 < 0)
+    {
+        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
+        return;
+    }
+
     dll_list *deck = dll_deck_get_nth_deck(deck_list, index_deck);
+
+    if (index_split >= dll_get_size(deck))
+    {
+        printf(CARD_INDEX_OUT_OF_BOUNDS, index_deck);
+        return;
+    }
+
     dll_list *left_deck, *right_deck;
     left_deck = deck_create(sizeof(card));
     right_deck = deck_create(sizeof(card));
